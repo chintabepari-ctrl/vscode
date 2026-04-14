@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}Inbox | Email Inbox Dashboard{% endblock %}
+{% block header_title %}Inbox{% endblock %}
+
+{% block content %}
+<section class="panel">
+    <form method="get" action="/" class="toolbar">
+        <label class="search-field">
+            <span class="sr-only">Search emails</span>
+            <input
+                type="search"
+                name="q"
+                value="{{ query_state.q }}"
+                placeholder="Search sender, recipient, or subject"
+            >
+        </label>
+
+        <label class="select-field">
+            <span class="sr-only">Filter read status</span>
+            <select name="status">
+                <option value="all" {% if query_state.status == 'all' %}selected{% endif %}>All mail</option>
+                <option value="unread" {% if query_state.status == 'unread' %}selected{% endif %}>Unread</option>
+                <option value="read" {% if query_state.status == 'read' %}selected{% endif %}>Read</option>
+            </select>
+        </label>
+
+        <input type="hidden" name="per_page" value="{{ query_state.per_page }}">
+        <button type="submit" class="button primary">Filter</button>
+    </form>
+
+    <div class="panel-header">
+        <div>
+            <h2>Captured emails</h2>
+            <p>{{ pagination.total_items }} total message{% if pagination.total_items != 1 %}s{% endif %}</p>
+        </div>
+        <span class="badge">{{ unread_count }} unread</span>
+    </div>
+
+    {% if emails %}
+    <div class="email-table-wrapper">
+        <table class="email-table">
+            <thead>
+                <tr>
+                    <th>Sender</th>
+                    <th>Recipient</th>
+                    <th>Subject</th>
+                    <th>Received</th>
+                    <th>Size</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for email in emails %}
+                {% set return_to = '/?' + build_query_string(q=query_state.q, status=query_state.status, page=pagination.page, per_page=query_state.per_page) %}
+                <tr class="{% if not email.is_read %}is-unread{% endif %}">
+                    <td data-label="Sender">
+                        <a class="primary-link" href="/emails/{{ email.id }}?return_to={{ return_to|urlencode }}">
+                            {{ email.from_email }}
+                        </a>
+                    </td>
+                    <td data-label="Recipient">{{ email.to_email }}</td>
+                    <td data-label="Subject">
+                        <div class="subject-cell">
+                            {% if not email.is_read %}<span class="unread-dot"></span>{% endif %}
+                            <span>{{ email.subject or "(No subject)" }}</span>
+                        </div>
+                    </td>
+                    <td data-label="Received">{{ format_datetime(email.email_date) or format_datetime(email.created_at) }}</td>
+                    <td data-label="Size">{{ format_size(email.size) }}</td>
+                    <td data-label="Actions">
+                        <div class="inline-actions">
+                            <form method="post" action="/emails/{{ email.id }}/toggle-read">
+                                <input type="hidden" name="next_url" value="{{ return_to }}">
+                                <button type="submit" class="button ghost">
+                                    {% if email.is_read %}Mark unread{% else %}Mark read{% endif %}
+                                </button>
+                            </form>
+                            <form method="post" action="/emails/{{ email.id }}/delete" onsubmit="return confirmDelete();">
+                                <input type="hidden" name="next_url" value="{{ return_to }}">
+                                <button type="submit" class="button danger">Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <div class="empty-illustration">✉</div>
+        <h2>No emails yet</h2>
+        <p>Your inbox will populate here once the Cloudflare Worker posts a valid webhook payload.</p>
+    </div>
+    {% endif %}
+
+    <div class="pagination">
+        <span>Page {{ pagination.page }} of {{ pagination.total_pages }}</span>
+        <div class="inline-actions">
+            {% if pagination.has_previous %}
+            <a class="button ghost" href="/?{{ build_query_string(q=query_state.q, status=query_state.status, page=pagination.page - 1, per_page=query_state.per_page) }}">Previous</a>
+            {% endif %}
+            {% if pagination.has_next %}
+            <a class="button ghost" href="/?{{ build_query_string(q=query_state.q, status=query_state.status, page=pagination.page + 1, per_page=query_state.per_page) }}">Next</a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

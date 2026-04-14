@@ -1,0 +1,43 @@
+INFO:     Will watch for changes in these directories: ['/workspaces/vscode']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [93788] using WatchFiles
+INFO:     Started server process [93790]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:38718 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38734 - "POST /webhook/email HTTP/1.1" 201 Created
+INFO:     103.145.132.192:0 - "GET /?q=&status=all&per_page=10 HTTP/1.1" 200 OK
+INFO:     103.145.132.192:0 - "GET /?q=&status=all&per_page=10 HTTP/1.1" 200 OK
+INFO:     2a06:98c0:3600::103:0 - "POST /webhook/email HTTP/1.1" 201 Created
+INFO:     103.145.132.192:0 - "GET /?q=&status=all&per_page=10 HTTP/1.1" 200 OK
+INFO:     103.145.132.192:0 - "GET /emails/20?return_to=/%3Fstatus%3Dall%26page%3D1%26per_page%3D10 HTTP/1.1" 200 OK
+INFO:     103.145.132.192:0 - "GET /?status=all&page=1&per_page=10 HTTP/1.1" 200 OK
+INFO:     103.145.132.192:0 - "POST /emails/19/toggle-read HTTP/1.1" 303 See Other
+INFO:     103.145.132.192:0 - "GET /?status=all&page=1&per_page=10 HTTP/1.1" 200 OK
+INFO:     103.145.132.192:0 - "POST /emails/18/toggle-read HTTP/1.1" 303 See Other
+INFO:     103.145.132.192:0 - "GET /?status=all&page=1&per_page=10 HTTP/1.1" 200 OK
+INFO:     103.145.132.192:0 - "POST /emails/17/toggle-read HTTP/1.1" 303 See Other
+INFO:     103.145.132.192:0 - "GET /?status=all&page=1&per_page=10 HTTP/1.1" 200 OK
+INFO:     103.145.132.192:0 - "POST /emails/16/toggle-read HTTP/1.1" 303 See Other
+INFO:     103.145.132.192:0 - "GET /?status=all&page=1&per_page=10 HTTP/1.1" 200 OK
+INFO:     103.145.132.192:0 - "POST /emails/15/toggle-read HTTP/1.1" 303 See Other
+INFO:     103.145.132.192:0 - "GET /?status=all&page=1&per_page=10 HTTP/1.1" 200 OK
+INFO:     103.145.132.192:0 - "POST /emails/14/toggle-read HTTP/1.1" 303 See Other
+INFO:     103.145.132.192:0 - "GET /?status=all&page=1&per_page=10 HTTP/1.1" 200 OK
+INFO:     103.145.132.192:0 - "POST /emails/14/toggle-read HTTP/1.1" 303 See Other
+INFO:     103.145.132.192:0 - "GET /?status=all&page=1&per_page=10 HTTP/1.1" 200 OK
+INFO:     103.145.132.192:0 - "POST /emails/14/toggle-read HTTP/1.1" 303 See Other
+INFO:     103.145.132.192:0 - "GET /?status=all&page=1&per_page=10 HTTP/1.1" 200 OK
+INFO:     103.145.132.192:0 - "POST /emails/13/toggle-read HTTP/1.1" 303 See Other
+INFO:     103.145.132.192:0 - "GET /?status=all&page=1&per_page=10 HTTP/1.1" 200 OK
+INFO:     103.145.132.192:0 - "POST /emails/13/toggle-read HTTP/1.1" 303 See Other
+INFO:     103.145.132.192:0 - "GET /?status=all&page=1&per_page=10 HTTP/1.1" 200 OK
+INFO:     103.145.132.192:0 - "POST /emails/13/toggle-read HTTP/1.1" 303 See Other
+INFO:     103.145.132.192:0 - "GET /?status=all&page=1&per_page=10 HTTP/1.1" 200 OK
+INFO:     103.145.132.192:0 - "POST /emails/12/toggle-read HTTP/1.1" 303 See Other
+INFO:     103.145.132.192:0 - "GET /?status=all&page=1&per_page=10 HTTP/1.1" 200 OK
+INFO:     103.145.132.192:0 - "POST /emails/11/toggle-read HTTP/1.1" 303 See Other
+INFO:     103.145.132.192:0 - "GET /?status=all&page=1&per_page=10 HTTP/1.1" 200 OK
+INFO:     103.145.132.192:0 - "GET /?status=all&page=1&per_page=10 HTTP/1.1" 200 OK
+INFO:     103.145.132.192:0 - "GET /docs HTTP/1.1" 200 OK
+INFO:     103.145.132.192:0 - "GET /openapi.json HTTP/1.1" 200 OK

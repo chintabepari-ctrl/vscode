@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Email {{ email.id }} | Email Inbox Dashboard{% endblock %}
+{% block header_title %}Email Detail{% endblock %}
+
+{% block content %}
+<section class="detail-grid">
+    <article class="panel">
+        <div class="detail-header">
+            <div>
+                <a href="{{ return_to }}" class="back-link">← Back to inbox</a>
+                <h2>{{ email.subject or "(No subject)" }}</h2>
+            </div>
+            <span class="badge {% if email.is_read %}badge-muted{% endif %}">
+                {% if email.is_read %}Read{% else %}Unread{% endif %}
+            </span>
+        </div>
+
+        <dl class="meta-grid">
+            <div>
+                <dt>Sender</dt>
+                <dd>{{ email.from_email }}</dd>
+            </div>
+            <div>
+                <dt>Recipient</dt>
+                <dd>{{ email.to_email }}</dd>
+            </div>
+            <div>
+                <dt>Received date</dt>
+                <dd>{{ email.email_date or email.email_date_raw or "Unavailable" }}</dd>
+            </div>
+            <div>
+                <dt>Stored at</dt>
+                <dd>{{ email.created_at }}</dd>
+            </div>
+            <div>
+                <dt>Size</dt>
+                <dd>{{ email.size_display }} ({{ email.size_bytes }} bytes)</dd>
+            </div>
+        </dl>
+
+        <div class="inline-actions">
+            <form method="post" action="/emails/{{ email.id }}/toggle-read">
+                <input type="hidden" name="next_url" value="/emails/{{ email.id }}?return_to={{ return_to|urlencode }}">
+                <button type="submit" class="button ghost">
+                    {% if email.is_read %}Mark unread{% else %}Mark read{% endif %}
+                </button>
+            </form>
+            <form method="post" action="/emails/{{ email.id }}/delete" onsubmit="return confirmDelete();">
+                <input type="hidden" name="next_url" value="{{ return_to }}">
+                <button type="submit" class="button danger">Delete</button>
+            </form>
+        </div>
+    </article>
+
+    <article class="panel">
+        <div class="section-header">
+            <h3>Headers</h3>
+        </div>
+        <div class="code-block compact">
+            {% for key, value in email.headers_json.items() %}
+            <div class="header-row">
+                <span class="header-key">{{ key }}</span>
+                <span class="header-value">{{ value }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </article>
+
+    <article class="panel panel-full">
+        <div class="section-header">
+            <h3>Raw email</h3>
+            <button type="button" class="button primary" data-copy-target="raw-email">Copy raw email</button>
+        </div>
+        <pre id="raw-email" class="code-block">{{ email.raw_email }}</pre>
+    </article>
+</section>
+{% endblock %}
